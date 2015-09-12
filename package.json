@@ -1,0 +1,19 @@
+{
+  "name": "Zimplistic",
+  "version": "1.0.0",
+  "description": "Zimplistic POC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devendrad-cuelogic/Zimplistic.git"
+  },
+  "author": "devendra dhanal <devendra.dhanal@cuelogic.co.in>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devendrad-cuelogic/Zimplistic/issues"
+  },
+  "homepage": "https://github.com/devendrad-cuelogic/Zimplistic"
+}

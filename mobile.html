@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Zimplistic - Mobile App</title>
+  </head>
+  <body>
+  <h1>Mobile App</h1>
+  <div id="status"></div>
+  <div id="commands_log"></div>
+
+  <div id="command">
+    <input type="text" id="command_text">
+    <button id="send_command">Send Command</button>
+  </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+      var socket = io();
+      $( "#send_command" ).click(function() {
+        socket.emit('command', $("#command_text").val());
+      });
+
+      socket.on('status', function(status_data){
+        $('#status').append($('<li>').text(status_data));
+      });
+
+      socket.on('command', function(command_data){
+        $('#commands_log').append($('<li>').text(command_data));
+      });
+    </script>
+  </body>
+</html>

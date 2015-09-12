@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Zimplistic - Rotimatic</title>
+  </head>
+  <body>
+  <h1>Rotimatic</h1>
+  <div id="status"></div>
+  <div id="commands_log"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+      var socket = io();
+      var device_power = false;
+      $(document).ready(function  (argument) {
+        $("#status").append($('<li>').text(device_power?' Device is ON':'Device is OFF'));
+      })
+      socket.on('command', function (command_data) {
+        if(command_data === 'on device'){
+          device_power = !device_power;
+          $("#status").append($('<li>').text(device_power?' Device is ON':'Device is OFF'));
+        };
+        if (device_power) {
+          $('#commands_log').append($('<li>').text(command_data));
+        };
+      });
+
+      socket.on('status', function(status_data){
+        if (device_power) {
+          $('#status').append($('<li>').text(status_data));
+        };
+      });
+    </script>
+  </body>
+</html>

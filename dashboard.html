@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Zimplistic - Dashboard</title>
+  </head>
+  <body>
+  <h1>Dashboard</h1>
+  <div id="status"></div>
+  <div id="commands_log"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+      var socket = io();
+
+      socket.on('status', function(status_data){
+        $('#status').append($('<li>').text(status_data));
+      });
+
+      socket.on('command', function(command_data){
+        $('#commands_log').append($('<li>').text(command_data));
+      });
+    </script>
+  </body>
+</html>

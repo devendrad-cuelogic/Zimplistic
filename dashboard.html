@@ -2,21 +2,39 @@
 <html>
   <head>
     <title>Zimplistic - Dashboard</title>
+    <style>
+    #status{
+      border: 2px dotted blue;
+      min-width: 200px;
+      float: left;
+    }
+    #commands_log{
+      border: 2px solid green;
+      min-width: 200px;
+      float: right;
+    }
+    </style>
   </head>
   <body>
   <h1>Dashboard</h1>
-  <div id="status"></div>
-  <div id="commands_log"></div>
+  <div id="status">
+    Status :
+  </div>
+  <div id="commands_log">
+    Command Log :
+  </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script>
       var socket = io();
 
+      //listening to status
       socket.on('status', function(status_data){
         $('#status').append($('<li>').text(status_data));
       });
 
+      // listening to command
       socket.on('command', function(command_data){
         $('#commands_log').append($('<li>').text(command_data));
       });

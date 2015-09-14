@@ -2,32 +2,87 @@
 <html>
   <head>
     <title>Zimplistic - Rotimatic</title>
+    <style>
+    #status{
+      border: 2px dotted blue;
+      min-width: 200px;
+      float: left;
+    }
+    #commands_log{
+      border: 2px solid green;
+      min-width: 200px;
+      float: right;
+    }
+    </style>
   </head>
   <body>
   <h1>Rotimatic</h1>
-  <div id="status"></div>
-  <div id="commands_log"></div>
+  <div id="status">
+    Status :
+  </div>
+  <div id="commands_log">
+    Command Log :
+  </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script>
       var socket = io();
-      var device_power = false;
+      var device_status = {
+          OFF    : 0,
+          READY  : 1,
+          COOKING: 2
+      }; // OFF | READY | COOKING
+      var device_stat = device_status.OFF;
+
+      // intially device is turned off
       $(document).ready(function  (argument) {
-        $("#status").append($('<li>').text(device_power?' Device is ON':'Device is OFF'));
-      })
+        $("#status").append($('<li>').text(device_stat == device_status.READY ?' Device is ON':'Device is OFF'));
+        socket.emit('status', device_stat == device_status.READY ? 'Device is ON':'Device is OFF');
+      });
+
+      // listening to command
       socket.on('command', function (command_data) {
-        if(command_data === 'on device'){
-          device_power = !device_power;
-          $("#status").append($('<li>').text(device_power?' Device is ON':'Device is OFF'));
+        var num;
+
+        // looking for cook command
+        if(/\b(COOK)\b/.test(command_data)) {
+          num = command_data.substring(5);
+          console.log('num =>', num);
+          command_data = 'COOK';
+        }
+
+        switch(command_data) {
+          case 'ON DEVICE':
+              device_stat = device_status.READY;
+              socket.emit('status', 'Device is ON');
+              $("#status").append($('<li>').text(device_stat == device_status.READY ? 'Device is ON' : 'Device is OFF'));
+              break;
+          case 'COOK':
+              console.log('I am here');
+              if (device_stat == device_status.READY) {
+                $('#commands_log').append($('<li>').text('Cooking ' + num + ' Rotis'));
+                device_stat = device_status.COOKING;
+                setTimeout(function(){
+                  device_stat = device_status.READY;
+                }, num * 1000); // It takes 1 second to make one roti :) ( actually it takes 1 minute or so )
+              } else if (device_stat == device_status.COOKING){
+                socket.emit('status', 'Sorry device is busy');
+              } else {
+                socket.emit('status', 'Sorry device is Offline');
+              }
+              break;
+          case 'OFF DEVICE':
+              device_stat = device_status.OFF;
+              socket.emit('status', 'Device is OFF');
+              $("#status").append($('<li>').text(device_stat == device_status.READY ? 'Device is ON' : 'Device is OFF'));
+              break;
         };
-        if (device_power) {
-          $('#commands_log').append($('<li>').text(command_data));
-        };
+
       });
 
       socket.on('status', function(status_data){
-        if (device_power) {
+        if (device_stat == device_status.READY) {
           $('#status').append($('<li>').text(status_data));
         };
       });

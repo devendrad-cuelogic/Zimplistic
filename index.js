@@ -2,6 +2,9 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var redis = require('socket.io-redis');
+io.adapter(redis({ host: 'localhost', port: 6379, key: 'rotimatic' }));
+
 app.get('/dashboard', function(req, res){
   res.sendFile(__dirname + '/dashboard.html');
 });
@@ -23,12 +26,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('status', function(status_data){
-    io.emit('status', status_data);
+    socket.broadcast.emit('status', status_data);
   });
 
   socket.on('command', function(command_data){
     console.log('command_data =>', command_data);
-    io.emit('command', command_data);
+    socket.broadcast.emit('command', command_data);
   });
 });
 

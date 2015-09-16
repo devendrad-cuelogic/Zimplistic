@@ -11,7 +11,7 @@ $ npm install
 $ node index.js
 ```
 
-And point your browser to `http://localhost:3000`. 
+And point your browser to links mentioned in Description section, in different tabs.
 
 ## Description
 The app has three modules , namely :
@@ -26,11 +26,11 @@ The app has three modules , namely :
 
 ## Usage
 - Go to `http://localhost:3000/rotimatic` and `http://localhost:3000/dashboard`
-- Either from `http://localhost:3000/mobile` or using android mobile app send one of the available comamnds described in Available commands 
+- Either from `http://localhost:3000/mobile` or using android mobile app send one of the available commands described in Available Commands section 
 - See it reflect on dashboard and rotimatic machine modules
 
 
-## Available commands to send to machine 
+## Available Commands to send to machine 
 - `ON DEVICE`
 - `OFF DEVICE`
 - `COOK <num_of_rotis>`

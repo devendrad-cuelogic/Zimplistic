@@ -26,11 +26,11 @@ The app has three modules , namely :
 
 ## Usage
 - Go to `http://localhost:3000/rotimatic` and `http://localhost:3000/dashboard`
-- Either from `http://localhost:3000/mobile` or using android mobile app send one of the available commands described in Available Commands section 
+- Either from `http://localhost:3000/mobile` or using android mobile app send one of the available commands described in Rotimatic Commands section 
 - See it reflect on dashboard and rotimatic machine modules
 
 
-## Available Commands to send to machine 
+## Rotimatic Commands 
 - `ON DEVICE`
 - `OFF DEVICE`
 - `COOK <num_of_rotis>`

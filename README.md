@@ -1,7 +1,7 @@
 # Zimplistic
 Zimplistic
 
-A simple demo for socket.io with 
+A simple demo for socket.io for realtime app
 
 ## Setup / Usage 
 
